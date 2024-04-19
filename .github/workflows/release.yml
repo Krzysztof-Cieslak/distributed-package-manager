@@ -56,4 +56,7 @@ jobs:
           draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
           token: ${{ secrets.GITHUB_TOKEN }}
           files: ./*.vsix
+      - name: Publish to Marketplace
+        run: |
+            npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
 

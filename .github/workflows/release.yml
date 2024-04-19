@@ -42,6 +42,10 @@ jobs:
           yarn version --new-version ${{ steps.changelog_reader.outputs.version }} --no-git-tag-version
           git commit -am "Bump package version to ${{ steps.changelog_reader.outputs.version }}"
           git push
+      - name: Build VSIX
+        run: |
+            yarn install
+            npx @vscode/vsce package
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -51,4 +55,5 @@ jobs:
           prerelease: ${{ steps.changelog_reader.outputs.status == 'prereleased' }}
           draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          files: ./*.vsix
 

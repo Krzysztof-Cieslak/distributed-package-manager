@@ -162,11 +162,10 @@ export async function activate(context: ExtensionContext) {
             )
             return
         }
-        const x = await commands.executeCommand(
+        await commands.executeCommand(
             'workbench.extensions.installExtension',
             Uri.file(result.filePath)
         )
-        console.log(x)
         //update installed
         const newInstalled = installed.filter(
             (info) => info.sourceHash !== result.hash

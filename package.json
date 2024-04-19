@@ -10,7 +10,7 @@
             "url": "https://twitter.com/k_cieslak"
         }
     ],
-    "icon": "./assets/logo.png",
+    "icon": "assets/logo.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/Krzysztof-Cieslak/distributed-package-manager.git"

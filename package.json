@@ -72,7 +72,7 @@
         }
     },
     "scripts": {
-        "vscode:prepublish": "npm run lint && npm run prettier-check && npm run type-check && npm run compile",
+        "vscode:prepublish": "yarn run lint && yarn run prettier-check && yarn run type-check && yarn run compile -p",
         "compile": "node ./esbuild.js",
         "compile:watch": "node ./esbuild.js --watch",
         "type-check": "tsc --noEmit --preserveWatchOutput -p .",
@@ -94,6 +94,7 @@
         "concurrently": "^8.2.2",
         "esbuild": "^0.20.2",
         "eslint": "^8.57.0",
+        "prettier": "^3.2.5",
         "typescript": "^5.3.3"
     },
     "dependencies": {

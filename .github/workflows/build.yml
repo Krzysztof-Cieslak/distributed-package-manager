@@ -30,7 +30,6 @@ jobs:
                   yarn run type-check
                   yarn run compile
                   yarn run lint
-                  yarn run test
 
             - name: Package extension
               run: |

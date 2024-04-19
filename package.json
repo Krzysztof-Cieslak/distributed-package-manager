@@ -1,0 +1,102 @@
+{
+    "name": "distributed-package-manager",
+    "displayName": "Distributed Package Manager",
+    "description": "Distributed Package Manager is VSCode extension that allows you to install and manage packages from sources different than the official marketplace.",
+    "preview": false,
+    "publisher": "krzysztofcieslak",
+    "contributors": [
+        {
+            "name": "Krzysztof Cieślak",
+            "url": "https://twitter.com/k_cieslak"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Krzysztof-Cieslak/distributed-package-manager.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Krzysztof-Cieslak/distributed-package-manager/issues"
+    },
+    "version": "0.0.1",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.88.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "configuration": {
+            "title": "Distributed Package Manager",
+            "properties": {
+                "distributed-package-manager.sources": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Sources for extensions managed by Distributed Package Manager",
+                    "scope": "application",
+                    "items": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "Type of source",
+                                "enum": [
+                                    "gh-release"
+                                ]
+                            }
+                        },
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "gh-release"
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "repository": {
+                                    "type": "string",
+                                    "description": "Repository name in the format owner/repo"
+                                }
+                            },
+                            "required": [
+                                "repository"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run lint && npm run prettier-check && npm run type-check && npm run compile",
+        "compile": "node ./esbuild.js",
+        "compile:watch": "node ./esbuild.js --watch",
+        "type-check": "tsc --noEmit --preserveWatchOutput -p .",
+        "type-check:watch": "npm run type-check -- --watch",
+        "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,ESBuild\" -c \"yellow.bold,cyan.bold\" \"yarn run type-check:watch\" \"yarn run compile:watch\"",
+        "prettier-check": "prettier **/*.ts --check",
+        "lint": "eslint src --ext ts",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/md5": "^2.3.5",
+        "@types/mocha": "^10.0.6",
+        "@types/node": "18.x",
+        "@types/vscode": "^1.88.0",
+        "@typescript-eslint/eslint-plugin": "^7.4.0",
+        "@typescript-eslint/parser": "^7.4.0",
+        "@vscode/test-cli": "^0.0.8",
+        "@vscode/test-electron": "^2.3.9",
+        "concurrently": "^8.2.2",
+        "esbuild": "^0.20.2",
+        "eslint": "^8.57.0",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "md5": "^2.3.0"
+    }
+}

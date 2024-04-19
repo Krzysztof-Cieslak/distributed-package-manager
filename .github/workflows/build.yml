@@ -33,7 +33,7 @@ jobs:
 
             - name: Package extension
               run: |
-                  npx vsce package
+                  npx @vscode/vsce package
 
             - name: Upload VSIX as artifact
               uses: actions/upload-artifact@v3

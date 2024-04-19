@@ -1,0 +1,49 @@
+name: Release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      username:
+        description: Github username of the person triggering the release
+        default: "Krzysztof-Cieslak"
+        required: true
+      email:
+        description: Email of the person triggering the release
+        default: "krzysztof_cieslak@windowslive.com"
+        required: true
+
+
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v1
+        with:
+            node-version: '18.x'
+      - name: Install Yarn
+        run: |
+            npm install -g yarn
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          path: ./CHANGELOG.md
+      - name: Bump Version
+        run: |
+          yarn version --new-version ${{ steps.changelog_reader.outputs.version }} --no-git-tag-version
+          git commit -am "Bump pacakge version to ${{ steps.changelog_reader.outputs.version }}"
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag: ${{ steps.changelog_reader.outputs.version }}
+          name: Release ${{ steps.changelog_reader.outputs.version }}
+          body: ${{ steps.changelog_reader.outputs.changes }}
+          prerelease: ${{ steps.changelog_reader.outputs.status == 'prereleased' }}
+          draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+

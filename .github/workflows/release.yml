@@ -40,14 +40,14 @@ jobs:
         run: |
           yarn version --new-version ${{ steps.changelog_reader.outputs.version }} --no-git-tag-version
           git commit -am "Bump package version to ${{ steps.changelog_reader.outputs.version }}"
+          git push
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag: ${{ steps.changelog_reader.outputs.version }}
+          tag_name: ${{ steps.changelog_reader.outputs.version }}
           name: Release ${{ steps.changelog_reader.outputs.version }}
           body: ${{ steps.changelog_reader.outputs.changes }}
           prerelease: ${{ steps.changelog_reader.outputs.status == 'prereleased' }}
           draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
-          allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
 

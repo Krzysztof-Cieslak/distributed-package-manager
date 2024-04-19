@@ -4,6 +4,6 @@ All notable changes to the "distributed-package-manager" extension will be docum
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [0.0.3] - 2024-04-19
+## [0.1.0] - 2024-04-19
 
 -   Initial release

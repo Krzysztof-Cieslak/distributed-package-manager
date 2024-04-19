@@ -27,6 +27,10 @@ jobs:
       - name: Install Yarn
         run: |
             npm install -g yarn
+      - name: Setup user
+        run: |
+            git config --global user.email "${{ github.event.inputs.email }}"
+            git config --global user.name "${{ github.event.inputs.username }}"
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
@@ -35,7 +39,7 @@ jobs:
       - name: Bump Version
         run: |
           yarn version --new-version ${{ steps.changelog_reader.outputs.version }} --no-git-tag-version
-          git commit -am "Bump pacakge version to ${{ steps.changelog_reader.outputs.version }}"
+          git commit -am "Bump package version to ${{ steps.changelog_reader.outputs.version }}"
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:

@@ -10,7 +10,7 @@
             "url": "https://twitter.com/k_cieslak"
         }
     ],
-    "icon": "assets/icon.png",
+    "icon": "./assets/logo.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/Krzysztof-Cieslak/distributed-package-manager.git"
@@ -77,7 +77,7 @@
         "compile": "node ./esbuild.js",
         "compile:watch": "node ./esbuild.js --watch",
         "type-check": "tsc --noEmit --preserveWatchOutput -p .",
-        "type-check:watch": "npm run type-check -- --watch",
+        "type-check:watch": "yarn run type-check -- --watch",
         "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,ESBuild\" -c \"yellow.bold,cyan.bold\" \"yarn run type-check:watch\" \"yarn run compile:watch\"",
         "prettier-check": "prettier **/*.ts --check",
         "lint": "eslint src --ext ts",

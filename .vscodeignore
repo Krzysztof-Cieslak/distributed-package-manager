@@ -11,3 +11,4 @@ vsc-extension-quickstart.md
 **/.vscode-test.*
 .nvmrc
 node_modules/**
+esbuild.js

@@ -3,13 +3,14 @@
     "displayName": "Distributed Package Manager",
     "description": "Distributed Package Manager is VSCode extension that allows you to install and manage packages from sources different than the official marketplace.",
     "preview": false,
-    "publisher": "krzysztofcieslak",
+    "publisher": "ionide",
     "contributors": [
         {
             "name": "Krzysztof Cieślak",
             "url": "https://twitter.com/k_cieslak"
         }
     ],
+    "icon": "assets/icon.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/Krzysztof-Cieslak/distributed-package-manager.git"
@@ -72,7 +73,7 @@
         }
     },
     "scripts": {
-        "vscode:prepublish": "yarn run lint && yarn run prettier-check && yarn run type-check && yarn run compile -p",
+        "vscode:prepublish": "yarn run lint && yarn run prettier-check && yarn run type-check && yarn run compile --production",
         "compile": "node ./esbuild.js",
         "compile:watch": "node ./esbuild.js --watch",
         "type-check": "tsc --noEmit --preserveWatchOutput -p .",

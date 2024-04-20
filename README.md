@@ -1,6 +1,6 @@
 # Distributed Package Manager
 
-Distributed Package Manager is VSCode extension that allows you to install and manage packages from sources different than the official marketplace. It may be useful for managing packages from private repositories or for managing packages that are not (yet) available in the official marketplace - for example, packages that are still in development.
+Distributed Package Manager is VSCode extension that allows you to install and manage VSCode extensions from sources different than the official marketplace. It may be useful for managing packages from private repositories or for managing packages that are not (yet) available in the official marketplace - for example, packages that are still in development.
 
 ## Supported package sources
 

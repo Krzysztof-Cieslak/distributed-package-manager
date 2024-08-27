@@ -116,9 +116,6 @@ function isInstalled(
 }
 
 export async function activate(context: ExtensionContext) {
-    console.log(
-        'Congratulations, your extension "distributed-package-manager" is now active!'
-    )
 
     const sources = workspace
         .getConfiguration('distributed-package-manager')

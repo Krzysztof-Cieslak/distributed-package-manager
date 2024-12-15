@@ -21,6 +21,7 @@ type GhReleaseSource = {
     type: SourceType.ghRelease
     /** owner/repo */
     repository: string
+    titleFilter: string
 }
 
 type Source = GhReleaseSource
@@ -51,23 +52,44 @@ async function fetchGhReleaseSource(
     source: GhReleaseSource,
     token: string
 ): Promise<GhReleaseSourceInfo | undefined> {
-    const result = await fetch(
-        'https://api.github.com/repos/' +
+    var release;
+    if (source.titleFilter) {
+        const result = await fetch(
+            'https://api.github.com/repos/' +
+            source.repository +
+            '/releases',
+            {
+                headers: {
+                    /* eslint-disable @typescript-eslint/naming-convention */
+                    Accept: 'application/vnd.github.v3+json',
+                    Authorization: 'Bearer ' + token,
+                    'X-GitHub-Api-Version': '2022-11-28',
+                    /* eslint-enable @typescript-eslint/naming-convention */
+                },
+            }
+        )
+        const releases: any = await result.json()
+        release = releases.find((release: any) => release.name.includes(source.titleFilter))
+        console.log("checking release matching filter: " + release?.name + " (out of " + releases.length + " releases)")
+    } else {
+        const result = await fetch(
+            'https://api.github.com/repos/' +
             source.repository +
             '/releases/latest',
-        {
-            headers: {
-                /* eslint-disable @typescript-eslint/naming-convention */
-                Accept: 'application/vnd.github.v3+json',
-                Authorization: 'Bearer ' + token,
-                'X-GitHub-Api-Version': '2022-11-28',
-                /* eslint-enable @typescript-eslint/naming-convention */
-            },
-        }
-    )
-    const json: any = await result.json()
-    console.log(json)
-    const vsix = json.assets.find((asset: any) => asset.name.endsWith('.vsix'))
+            {
+                headers: {
+                    /* eslint-disable @typescript-eslint/naming-convention */
+                    Accept: 'application/vnd.github.v3+json',
+                    Authorization: 'Bearer ' + token,
+                    'X-GitHub-Api-Version': '2022-11-28',
+                    /* eslint-enable @typescript-eslint/naming-convention */
+                },
+            }
+        )
+        release = await result.json()
+        console.log("checking latest release: " + release?.name)
+    }
+    const vsix = release.assets.find((asset: any) => asset.name.endsWith('.vsix'))
     if (!vsix) {
         return
     }
@@ -176,4 +198,4 @@ export async function activate(context: ExtensionContext) {
     })
 }
 
-export function deactivate() {}
+export function deactivate() { }

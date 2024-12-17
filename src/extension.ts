@@ -52,12 +52,10 @@ async function fetchGhReleaseSource(
     source: GhReleaseSource,
     token: string
 ): Promise<GhReleaseSourceInfo | undefined> {
-    var release;
+    var release
     if (source.titleFilter) {
         const result = await fetch(
-            'https://api.github.com/repos/' +
-            source.repository +
-            '/releases',
+            'https://api.github.com/repos/' + source.repository + '/releases',
             {
                 headers: {
                     /* eslint-disable @typescript-eslint/naming-convention */
@@ -69,13 +67,21 @@ async function fetchGhReleaseSource(
             }
         )
         const releases: any = await result.json()
-        release = releases.find((release: any) => release.name.includes(source.titleFilter))
-        console.log("checking release matching filter: " + release?.name + " (out of " + releases.length + " releases)")
+        release = releases.find((release: any) =>
+            release.name.includes(source.titleFilter)
+        )
+        console.log(
+            'checking release matching filter: ' +
+                release?.name +
+                ' (out of ' +
+                releases.length +
+                ' releases)'
+        )
     } else {
         const result = await fetch(
             'https://api.github.com/repos/' +
-            source.repository +
-            '/releases/latest',
+                source.repository +
+                '/releases/latest',
             {
                 headers: {
                     /* eslint-disable @typescript-eslint/naming-convention */
@@ -86,10 +92,12 @@ async function fetchGhReleaseSource(
                 },
             }
         )
-        release = await result.json()
-        console.log("checking latest release: " + release?.name)
+        release = (await result.json()) as any
+        console.log('checking latest release: ' + release?.name)
     }
-    const vsix = release.assets.find((asset: any) => asset.name.endsWith('.vsix'))
+    const vsix = release.assets.find((asset: any) =>
+        asset.name.endsWith('.vsix')
+    )
     if (!vsix) {
         return
     }
@@ -138,7 +146,6 @@ function isInstalled(
 }
 
 export async function activate(context: ExtensionContext) {
-
     const sources = workspace
         .getConfiguration('distributed-package-manager')
         .get<Source[]>('sources', [])
@@ -198,4 +205,4 @@ export async function activate(context: ExtensionContext) {
     })
 }
 
-export function deactivate() { }
+export function deactivate() {}

@@ -61,6 +61,10 @@
                                 "repository": {
                                     "type": "string",
                                     "description": "Repository name in the format owner/repo"
+                                },
+                                "titleFilter": {
+                                    "type": "string",
+                                    "description": "Only consider releases with matching title"
                                 }
                             },
                             "required": [
